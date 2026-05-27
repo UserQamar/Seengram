@@ -23,6 +23,9 @@ concurrency:
     group: ${{ github.workflow }}-${{ github.ref }}
     cancel-in-progress: true
 
+env:
+    UPSTREAM_REPO: faroukbmiled/RyukGram
+
 jobs:
     build:
         name: Build RyukGram from Release
@@ -55,7 +58,7 @@ jobs:
                 if [ -n "$INPUT_TAG" ]; then
                   TAG="$INPUT_TAG"
                 else
-                  TAG="$(gh release view --repo "${{ github.repository }}" --json tagName -q .tagName)"
+                  TAG="$(gh release view --repo "$UPSTREAM_REPO" --json tagName -q .tagName)"
                 fi
                 [ -n "$TAG" ] || { echo "::error::Could not resolve release tag."; exit 1; }
                 VERSION="${TAG#v}"
@@ -72,7 +75,7 @@ jobs:
                 set -euo pipefail
                 mkdir -p packages release-assets
                 gh release download "$TAG" \
-                  --repo "${{ github.repository }}" \
+                  --repo "$UPSTREAM_REPO" \
                   --dir release-assets \
                   --pattern "RyukGram_*_rootless.deb" \
                   --pattern "zxPluginsInject_v*.dylib"
