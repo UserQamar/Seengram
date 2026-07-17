@@ -28,8 +28,11 @@ jobs:
 
     - name: Install Theos
       run: |
-        git clone --recursive --branch master https://github.com/theos/theos.git $HOME/theos
-        echo "THEOS=$HOME/theos" >> $GITHUB_ENV
+        git clone --recursive https://github.com/theos/theos.git $HOME/theos
+        echo "Theos commit:"
+        git -C $HOME/theos rev-parse HEAD
+        echo "Logos:"
+        $HOME/theos/bin/logos.pl --version || true
 
     - name: Install iOS SDK
       run: |
@@ -58,7 +61,7 @@ jobs:
         "${{ inputs.instagram_url }}" \
         -o packages/com.burbn.instagram.ipa
 
-    - name: Build RyukGram
+    - name: Build SeenGram
       run: |
         chmod +x build.sh
         ./build.sh sideload
