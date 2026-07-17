@@ -1,4 +1,4 @@
-name: Build RyukGram From Source
+name: Build SeenGram From Source
 
 on:
   workflow_dispatch:
