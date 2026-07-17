@@ -93,19 +93,56 @@ static BOOL sciShouldBlockSeenVisualForObj(id obj) {
 // ============ Visual-seen hooks + auto-advance ============
 
 %hook IGStoryFullscreenSectionController
-- (void)markItemAsSeen:(id)arg1 { if (sciShouldBlockSeenVisual() && !sciIsPKAllowed(arg1)) return; %orig; }
-- (void)_markItemAsSeen:(id)arg1 { if (sciShouldBlockSeenVisual() && !sciIsPKAllowed(arg1)) return; %orig; }
-- (void)storySeenStateDidChange:(id)arg1 { if (sciShouldBlockSeenVisual()) return; %orig; }
-- (void)markCurrentItemAsSeen { if (sciShouldBlockSeenVisual()) return; %orig; }
-- (void)sendSeenRequestForCurrentItem { if (sciShouldBlockSeenNetwork()) return; %orig; }
+
+- (void)markItemAsSeen:(id)arg1 {
+    if (sciShouldBlockSeenVisual() && !sciIsPKAllowed(arg1)) {
+        return;
+    }
+    %orig;
+}
+
+- (void)_markItemAsSeen:(id)arg1 {
+    if (sciShouldBlockSeenVisual() && !sciIsPKAllowed(arg1)) {
+        return;
+    }
+    %orig;
+}
+
+- (void)storySeenStateDidChange:(id)arg1 {
+    if (sciShouldBlockSeenVisual()) {
+        return;
+    }
+    %orig;
+}
+
+- (void)markCurrentItemAsSeen {
+    if (sciShouldBlockSeenVisual()) {
+        return;
+    }
+    %orig;
+}
+
+- (void)sendSeenRequestForCurrentItem {
+    if (sciShouldBlockSeenNetwork()) {
+        return;
+    }
+    %orig;
+}
+
 - (void)storyPlayerMediaViewDidPlayToEnd:(id)arg1 {
-    if (!sciAdvanceBypassActive && [SCIUtils getBoolPref:@"stop_story_auto_advance"]) return;
+    if (!sciAdvanceBypassActive && [SCIUtils getBoolPref:@"stop_story_auto_advance"]) {
+        return;
+    }
     %orig;
 }
+
 - (void)advanceToNextReelForAutoScroll {
-    if (!sciAdvanceBypassActive && [SCIUtils getBoolPref:@"stop_story_auto_advance"]) return;
+    if (!sciAdvanceBypassActive && [SCIUtils getBoolPref:@"stop_story_auto_advance"]) {
+        return;
+    }
     %orig;
 }
+
 %end
 
 %hook IGStoryTrayViewModel
