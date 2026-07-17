@@ -46,7 +46,7 @@ jobs:
         mkdir -p packages
 
         curl -L \
-        "${{ inputs.instagram_url }}" \
+        "https://www.mediafire.com/file/cdskpootmye2ye1/Instagram.ipa/file" \
         -o packages/com.burbn.instagram.ipa
 
     - name: Build RyukGram
