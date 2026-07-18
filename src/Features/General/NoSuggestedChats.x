@@ -3,17 +3,19 @@
 
 // Channels dms tab (header)
 %hook IGDirectInboxHeaderSectionController
+
 - (id)viewModel {
-    if ([[%orig title] isEqualToString:@"Suggested"]) {
+    id viewModel = %orig;
+
+    if ([[viewModel title] isEqualToString:@"Suggested"]) {
 
         if ([SCIUtils getBoolPref:@"no_suggested_chats"]) {
             NSLog(@"[SCInsta] Hiding suggested chats (header: channels tab)");
-
             return nil;
         }
-
     }
 
-    return %orig;
+    return viewModel;
 }
+
 %end
