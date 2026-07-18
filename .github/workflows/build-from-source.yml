@@ -63,8 +63,10 @@ jobs:
 
     - name: Build SeenGram
       run: |
-        chmod +x build.sh
-        ./build.sh sideload
+       chmod +x build.sh
+       export MAKEFLAGS="-k"
+       export THEOS_BUILD_DIR="$PWD/.theos"
+       ./build.sh sideload V=1
       continue-on-error: true
 
     - name: Upload IPA
