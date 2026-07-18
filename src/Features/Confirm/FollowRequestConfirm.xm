@@ -1,22 +1,41 @@
+#import "../../InstagramHeaders.h"
 #import "../../Utils.h"
 
 %hook IGPendingRequestView
+
 - (void)_onApproveButtonTapped {
-    if ([SCIUtils getBoolPref:@"follow_request_confirm"]) {
-        NSLog(@"[SCInsta] Confirm follow request triggered");
 
-        [SCIUtils showConfirmation:^(void) { %orig; }];
+    if ([SCIUtils getBoolPref:@"follow_request_confirm"]) {
+
+        NSLog(@"[SCInsta] Confirm follow request approve triggered");
+
+        [SCIUtils showConfirmation:^{
+            %orig;
+        }];
+
     } else {
-        return %orig;
+
+        %orig;
+
     }
 }
+
+
 - (void)_onIgnoreButtonTapped {
-    if ([SCIUtils getBoolPref:@"follow_request_confirm"]) {
-        NSLog(@"[SCInsta] Confirm follow request triggered");
 
-        [SCIUtils showConfirmation:^(void) { %orig; }];
+    if ([SCIUtils getBoolPref:@"follow_request_confirm"]) {
+
+        NSLog(@"[SCInsta] Confirm follow request ignore triggered");
+
+        [SCIUtils showConfirmation:^{
+            %orig;
+        }];
+
     } else {
-        return %orig;
+
+        %orig;
+
     }
 }
+
 %end
